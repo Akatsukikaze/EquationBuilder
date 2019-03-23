@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Equation Builder</string>
+
+    <string name="ne_title">New Equation</string>
+    <string name="menu_item_ne_main">new equation</string>
+
+    <string name="menu_item_nv_new">new variate</string>
+    <string name="menu_item_dv_new">delete variate</string>
+</resources>
