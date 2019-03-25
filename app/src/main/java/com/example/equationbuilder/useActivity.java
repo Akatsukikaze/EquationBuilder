@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class useActivity extends AppCompatActivity {
     private Equation equation;
@@ -44,7 +45,15 @@ public class useActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        equation = new Equation(eq_str);
+        try {
+            equation = new Equation(eq_str);
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Can't build equation. Unknown error.", Toast.LENGTH_SHORT).show();
+            Intent myIntent = new Intent(useActivity.this, MainActivity.class);
+            startActivity(myIntent);
+            useActivity.this.finish();
+            this.finish();
+        }
 
         eqBackground = findViewById(R.id.eq_bg_use);
         edits = new SimpleList<>();
