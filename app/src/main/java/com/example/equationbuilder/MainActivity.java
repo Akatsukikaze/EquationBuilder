@@ -102,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
                             listView.setAdapter(adapter);
                             listView.setOnItemClickListener(itemClickListener);
                             listView.setOnItemLongClickListener(itemLongClickListener);
+                            i = 0;
+                            for (Map.Entry<String, ?> entry : equationMap.entrySet()) {
+                                equationNames[i] = entry.getKey();
+                                equations[i] = entry.getValue().toString();
+                                i++;
+                            }
                         }
                     })
                     .setNegativeButton("Cancel", null)
