@@ -1,5 +1,6 @@
 package com.example.equationbuilder;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences equationSP;
     private Map<String,?> equationMap;
     private String[] equationNames;
+    private String[] equations;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,18 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
         equationSP = getSharedPreferences("equations",MODE_PRIVATE);
 
+        /*
         SharedPreferences.Editor editor = equationSP.edit();
         editor.putString("test1","value1");
         editor.putString("test2","value2");
         editor.commit();
-
+        */
 
         equationMap = equationSP.getAll();
         int mapSize = equationMap.size();
         equationNames = new String[mapSize];
+        equations = new String[mapSize];
         int i = 0;
         for (Map.Entry<String, ?> entry : equationMap.entrySet()) {
             equationNames[i] = entry.getKey();
+            equations[i] = entry.getValue().toString();
             i++;
         }
 
@@ -59,7 +64,14 @@ public class MainActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("123","1234567");
+            String describe = equationNames[position];
+            String equation = equations[position];
+
+            Intent intent = new Intent(MainActivity.this, useActivity.class);
+            intent.putExtra("describe",describe);
+            intent.putExtra("equation",equation);
+            startActivity(intent);
+            MainActivity.this.finish();
         }
     };
     private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
@@ -113,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_item_new:
                 Intent intent = new Intent(MainActivity.this, newActivity.class);
                 startActivity(intent);
+                this.finish();
                 break;
         }
 

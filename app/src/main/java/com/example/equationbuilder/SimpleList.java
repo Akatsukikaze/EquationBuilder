@@ -5,24 +5,42 @@ public class SimpleList<E> {
     private SimpleNode<E> tail;
     private int count;
     public SimpleList(){
+        head = tail = null;
         count = 0;
     }
+    /*
     public SimpleList(E e){
         head = tail = new SimpleNode<E>(e);
         count = 1;
     }
+    */
+    public boolean isNotNull(){
+        return count>0;
+    }
     public void add(E e){
-        tail = new SimpleNode<E>(e,tail);
+        if(head == null){
+            tail = new SimpleNode<>(e,tail);
+            head = tail;
+        }else {
+            tail.next = new SimpleNode<>(e, tail);
+            tail = tail.next;
+        }
         count++;
     }
     public boolean remove(){
-        if(count>0){
+        if(count>1){
             tail = tail.prev;
             tail.next = null;
             count--;
             return true;
         }else{
-            return false;
+            if(count == 1) {
+                head = tail = null;
+                count = 0;
+                return true;
+            }else {
+                return false;
+            }
         }
     }
     public E get(int pos){
@@ -37,6 +55,9 @@ public class SimpleList<E> {
         }else{
             return null;
         }
+    }
+    public boolean isExist(int pos){
+        return pos<count;
     }
     public E getTail(){
         return tail.e;
@@ -55,10 +76,18 @@ public class SimpleList<E> {
             return true;
         }
     }
+    public boolean setTail(E e){
+        if(count < 1){
+            return false;
+        }else{
+            tail.e = e;
+            return true;
+        }
+    }
     public int getCount(){
         return count;
     }
-    public void clear(){
+    public void clean(){
         head = tail = null;
         count = 0;
     }
